@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Items Request items info should be correct 1`] = `
+Object {
+  "name": "SanDisk 128GB Ultra MicroSDXC",
+  "price": undefined,
+  "priceForAll": NaN,
+  "quantity": 1,
+}
+`;
+
+exports[`Items Request items info should be correct 2`] = `
+Object {
+  "name": "BENGOO G9000 Stereo Gaming Headset",
+  "price": undefined,
+  "priceForAll": 42,
+  "quantity": 1,
+}
+`;
+
+exports[`Items Request items info should be correct 3`] = `
+Object {
+  "name": "Logitech C922x Pro Stream Webcam",
+  "price": 100,
+  "priceForAll": 200,
+  "quantity": 2,
+}
+`;
