@@ -1,5 +1,11 @@
-import { CartItemData } from '@Components/cartPage/addCartItemPopup/addCartItemPopup';
 import { Component } from '@Core/component';
+
+type CartItemInfo = {
+    name: string;
+    price: number;
+    quantity: number;
+    priceForAll: number;
+};
 
 const SELECTORS = {
     name: './/h2[contains(@class, "name")]',
@@ -39,7 +45,7 @@ export class CartItem extends Component {
         return Number(quantityElement.textContent);
     }
 
-    public async getInfo(): Promise<CartItemData & { priceForAll: number }> {
+    public async getInfo(): Promise<CartItemInfo> {
         return {
             name: await this.getName(),
             price: await this.getPrice(),
