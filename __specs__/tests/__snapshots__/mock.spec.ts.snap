@@ -3,26 +3,26 @@
 exports[`Items Request items info should be correct 1`] = `
 Object {
   "name": "SanDisk 128GB Ultra MicroSDXC",
-  "price": undefined,
-  "priceForAll": NaN,
-  "quantity": 1,
+  "price": 30,
+  "priceForAll": 120,
+  "quantity": 4,
 }
 `;
 
 exports[`Items Request items info should be correct 2`] = `
 Object {
   "name": "BENGOO G9000 Stereo Gaming Headset",
-  "price": undefined,
-  "priceForAll": 42,
-  "quantity": 1,
+  "price": 42,
+  "priceForAll": 210,
+  "quantity": 5,
 }
 `;
 
 exports[`Items Request items info should be correct 3`] = `
 Object {
   "name": "Logitech C922x Pro Stream Webcam",
-  "price": 100,
-  "priceForAll": 200,
+  "price": 20,
+  "priceForAll": 40,
   "quantity": 2,
 }
 `;

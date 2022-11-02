@@ -14,19 +14,19 @@ export class GetCartItemsMock extends MockObject {
             {
                 id: 1,
                 name: 'Some weird name',
-                price: 1000,
-                quantity: 1,
+                price: 30,
+                quantity: 4,
             },
             {
                 id: 2,
                 name: 'This should`n be in snapshot!!',
                 price: 42,
-                quantity: 1,
+                quantity: 5,
             },
             {
                 id: 3,
                 name: 'Wrong Name',
-                price: 100,
+                price: 20,
                 quantity: 2,
             },
         ];
