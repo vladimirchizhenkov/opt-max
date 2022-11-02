@@ -4,6 +4,12 @@
 - Fix [msw](https://mswjs.io/docs/) returning fixture
 - Make your own test in the style of the ones already created
 
+## You have to fix:
+
+    - addItemPopup.spec.ts
+    - itemCount.spec.ts
+    - mock.spec.ts
+
 # Helpfull commands
 
 | Command               | Description          | Directory          |
