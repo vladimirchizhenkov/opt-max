@@ -1,5 +1,5 @@
 import { fireEvent, logDOM } from '@testing-library/react';
-import { CustomFile } from '@Utils/customFile';
+import type { CustomFile } from '@Utils/customFile';
 
 export class Component {
     protected element: Element;

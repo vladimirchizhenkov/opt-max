@@ -8,7 +8,7 @@ const SELECTORS = {
 export class CartList extends Component {
     public async getCartItems(): Promise<CartItem[]> {
         const cartItemsElements = await this.element.waitForQuerySelector(SELECTORS.cartItems);
-        const cartItems = cartItemsElements.map((i) => new CartItem(i));
+        const cartItems = cartItemsElements.map(i => new CartItem(i));
         return cartItems;
     }
 }

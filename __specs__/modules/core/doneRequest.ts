@@ -1,5 +1,5 @@
 import { parseFormData } from '@Utils/parseFormData';
-import { MockedRequest, RequestParams } from 'msw';
+import type { MockedRequest, RequestParams } from 'msw';
 
 export class DoneRequest {
     private readonly req: MockedRequest;

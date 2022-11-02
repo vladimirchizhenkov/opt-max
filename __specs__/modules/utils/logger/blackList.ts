@@ -17,5 +17,4 @@ const errorsBlacklist = [
 const isStringInBlacklist = (message: string): boolean =>
     typeof message === 'string' && !!errorsBlacklist.find(it => message.includes(it));
 
-export const isMessageBlacklisted = (message: string[]): boolean =>
-    !!message.find(isStringInBlacklist);
+export const isMessageBlacklisted = (message: string[]): boolean => !!message.find(isStringInBlacklist);

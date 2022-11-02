@@ -1,9 +1,11 @@
-import { render, RenderResult, cleanup } from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import { debug } from '@Utils/debug';
 import { delay } from '@Utils/delay';
 import React from 'react'; // eslint-disable-line @typescript-eslint/no-unused-vars
 import { Provider } from 'react-redux'; // eslint-disable-line @typescript-eslint/no-unused-vars
-import { applyMiddleware, createStore, Store } from 'redux';
+import type { Store } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { cartSaga } from 'frontend/redux/sagas/cart';
 import { rootReducer } from 'frontend/redux/reducers';
 import App from 'frontend/App';

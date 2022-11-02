@@ -3,8 +3,8 @@ import { Component } from '@Core/component';
 type CartItemInfo = {
     name: string;
     price: number;
-    quantity: number;
     priceForAll: number;
+    quantity: number;
 };
 
 const SELECTORS = {
@@ -21,18 +21,20 @@ const SELECTORS = {
 };
 
 export class CartItem extends Component {
-    public async getPriceForAll(): Promise<number> {
-        const [priceElement] = await this.element.waitForXpath(SELECTORS.fullPrice);
-        return Number(priceElement.textContent.replace('$', ''));
-    }
-
     public async getPrice(): Promise<number | undefined> {
-        const [priceElement] = await this.element.waitForXpath(SELECTORS.priceForOne, { timeout: 1 }).catch(() => []);
+        const [priceElement] = await this.element
+            .waitForXpath(SELECTORS.priceForOne, { timeout: 1000 })
+            .catch(() => []);
 
         if (!priceElement) return;
 
         const price = priceElement.textContent.split('×')[0].replace('$', '');
         return Number(price);
+    }
+
+    public async getPriceForAll(): Promise<number> {
+        const [priceElement] = await this.element.waitForXpath(SELECTORS.fullPrice);
+        return Number(priceElement.textContent.replace('$', ''));
     }
 
     public async getName(): Promise<string> {

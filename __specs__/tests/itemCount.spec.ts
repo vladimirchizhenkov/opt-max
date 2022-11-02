@@ -1,4 +1,4 @@
-import { CartItem } from '@Components/cartPage/cartList/cartItem/cartItem';
+import type { CartItem } from '@Components/cartPage/cartList/cartItem/cartItem';
 import { CartPageContainer } from '@Components/cartPage/cartPage';
 
 const INITIAL_ITEM_COUNT = 5;

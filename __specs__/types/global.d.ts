@@ -1,4 +1,4 @@
-import Mock = jest.Mock;
+/* eslint-disable @typescript-eslint/no-empty-interface */
 
 declare const reporter: {
     description(description: string): this;
@@ -10,7 +10,7 @@ declare const reporter: {
     endStep(status?: Status): this;
     addArgument(name: string): this;
     addEnvironment(name: string, value: string): this;
-    addAttachment(name: string, buffer: any, type: string): this;
+    addAttachment(name: string, buffer: unknown, type: string): this;
     addLabel(name: string, value: string): this;
     addParameter(paramName: string, name: string, value: string): this;
 };

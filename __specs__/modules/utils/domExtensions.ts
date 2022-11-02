@@ -1,64 +1,51 @@
-import { fireEvent } from '@testing-library/react';
-import { debug } from '@Utils/debug';
+/* eslint-disable @typescript-eslint/no-empty-interface */
+
+import { fireEvent, logDOM } from '@testing-library/react';
 import { waitFor } from '@Utils/waitFor';
 
+import { format } from 'util';
+
+type CustomDomApi = {
+    $$x: (xpath: string) => Element[];
+    $x: (xpath: string) => Element;
+    clickByCSS: (selector: string) => Promise<void>;
+    clickByXpath: (selector: string) => Promise<void>;
+    debug: () => void;
+    getByText: (text: string) => Element;
+    hoverByCSS: (selector: string) => Promise<void>;
+    hoverByXpath: (selector: string) => Promise<void>;
+    waitForQuerySelector: (selector: string) => Promise<Element[]>;
+    waitForXpath: (selector: string, options?: { timeout: number }) => Promise<Element[]>;
+};
+
 declare global {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-    interface Element {
-        $$x: (xpath: string) => Element[];
-        $x: (xpath: string) => Element;
-        clickByCSS: (selector: string) => Promise<void>;
-        clickByXpath: (selector: string) => Promise<void>;
-        hoverByCSS: (selector: string) => Promise<void>;
-        hoverByXpath: (selector: string) => Promise<void>;
-        waitFor: <T>(func: () => T, options?: { timeout: number }) => Promise<T>;
-        waitForQuerySelector: (selector: string) => Promise<Element[]>;
-        waitForXpath: (selector: string, options?: { timeout: number }) => Promise<Element[]>;
-    }
-    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-    interface Document {
-        $$x: (xpath: string) => Element[];
-        $x: (xpath: string) => Element;
-        clickByCSS: (selector: string) => Promise<void>;
-        clickByXpath: (selector: string) => Promise<void>;
-        hoverByCSS: (selector: string) => Promise<void>;
-        hoverByXpath: (selector: string) => Promise<void>;
-        waitFor: <T>(func: () => T, options?: { timeout: number }) => Promise<T>;
-        waitForQuerySelector: (selector: string) => Promise<Element[]>;
-        waitForXpath: (selector: string, options?: { timeout: number }) => Promise<Element[]>;
-    }
+    interface Document extends CustomDomApi {}
+    interface Element extends CustomDomApi {}
 }
 
-Element.prototype.waitForXpath = async function waitForXpath(
+async function waitForXpath(
+    this: Element | Document,
     selector: string,
     options?: { timeout: number }
 ): Promise<Element[]> {
-    const thisElement = this as Element;
     try {
-        return await thisElement.waitFor(() => thisElement.$$x(selector), options);
+        return await waitFor(() => this.$$x(selector), options);
     } catch (e) {
         throw new Error(`Waiting of xpath selector '${selector}' failed \n${(e as Error).stack}`);
     }
-};
+}
 
-Element.prototype.waitForQuerySelector = async function waitForQuerySelector(selector: string): Promise<Element[]> {
-    const thisElement = this as Element;
+async function waitForQuerySelector(this: Element | Document, selector: string): Promise<Element[]> {
     try {
-        return await thisElement.waitFor(() => Array.from(thisElement.querySelectorAll<Element>(selector)));
+        return await waitFor(() => Array.from(this.querySelectorAll<Element>(selector)));
     } catch (e) {
         throw new Error(`Waiting of css selector '${selector}' failed \n${(e as Error).stack}`);
     }
-};
+}
 
-Element.prototype.$x = function $x(xpath: string): Element {
-    const thisElement = this as Element;
-    const [element] = thisElement.$$x(xpath);
-    return element;
-};
+function $$x(this: Element | Document, xpath: string): Element[] {
+    const iterator = document.evaluate(xpath, this, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
 
-Element.prototype.$$x = function $$x(xpath: string): Element[] {
-    const thisElement = this as Element;
-    const iterator = document.evaluate(xpath, thisElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
     const result: Element[] = [];
     let element = iterator.iterateNext();
     while (element) {
@@ -66,55 +53,70 @@ Element.prototype.$$x = function $$x(xpath: string): Element[] {
         element = iterator.iterateNext();
     }
     return result;
-};
+}
 
-Element.prototype.clickByCSS = async function clickByCSS(selector: string): Promise<void> {
+function getByText(this: Element, text: string): Element {
+    const selector = format('.//*[contains(text(), "%s")]', text);
+    return this.$x(selector);
+}
+
+function $x(this: Element | Document, xpath: string): Element {
+    const [element] = this.$$x(xpath);
+    return element;
+}
+
+async function clickByCSS(this: Element | Document, selector: string): Promise<void> {
     try {
-        const thisElement = this as Element;
-        const [element] = await thisElement.waitForQuerySelector(selector);
+        const [element] = await this.waitForQuerySelector(selector);
         fireEvent.click(element);
     } catch (e) {
         throw new Error(`Cannot click by css \n${(e as Error).stack}`);
     }
-};
+}
 
-Element.prototype.clickByXpath = async function clickByXpath(selector: string): Promise<void> {
+async function clickByXpath(this: Element | Document, selector: string): Promise<void> {
     try {
-        const thisElement = this as Element;
-        const [element] = await thisElement.waitForXpath(selector);
+        const [element] = await this.waitForXpath(selector);
         fireEvent.click(element);
     } catch (e) {
         throw new Error(`Cannot click by xpath \n${(e as Error).stack}`);
     }
-};
+}
 
-Element.prototype.hoverByCSS = async function hoverByCSS(selector: string): Promise<void> {
+async function hoverByCSS(this: Element | Document, selector: string): Promise<void> {
     try {
-        const thisElement = this as Element;
-        const [element] = await thisElement.waitForQuerySelector(selector);
+        const [element] = await this.waitForQuerySelector(selector);
         fireEvent.mouseOver(element);
     } catch (e) {
         throw new Error(`Cannot hover by css \n${(e as Error).stack}`);
     }
-};
+}
 
-Element.prototype.hoverByXpath = async function hoverByXpath(selector: string): Promise<void> {
+function debug(this: Element | Document): void {
+    logDOM(this);
+}
+
+async function hoverByXpath(this: Element | Document, selector: string): Promise<void> {
     try {
-        const thisElement = this as Element;
-        const [element] = await thisElement.waitForXpath(selector);
+        const [element] = await this.waitForXpath(selector);
         fireEvent.mouseOver(element);
     } catch (e) {
         throw new Error(`Cannot hover by xpath \n${(e as Error).stack}`);
     }
+}
+
+const extensions = {
+    $$x,
+    $x,
+    clickByCSS,
+    clickByXpath,
+    debug,
+    hoverByCSS,
+    hoverByXpath,
+    waitFor,
+    waitForQuerySelector,
+    waitForXpath,
+    getByText,
 };
 
-Element.prototype.waitFor = waitFor;
-Document.prototype.waitFor = Element.prototype.waitFor;
-Document.prototype.waitForQuerySelector = Element.prototype.waitForQuerySelector;
-Document.prototype.waitForXpath = Element.prototype.waitForXpath;
-Document.prototype.$x = Element.prototype.$x;
-Document.prototype.$$x = Element.prototype.$$x;
-Document.prototype.clickByCSS = Element.prototype.clickByCSS;
-Document.prototype.clickByXpath = Element.prototype.clickByXpath;
-Document.prototype.hoverByCSS = Element.prototype.hoverByCSS;
-Document.prototype.hoverByXpath = Element.prototype.hoverByXpath;
+[Element, Document].forEach(({ prototype }) => (prototype = Object.assign(prototype, extensions)));

@@ -1,4 +1,4 @@
-import {LoggingEvent} from 'log4js';
+import type { LoggingEvent } from 'log4js';
 
 const getFileName = (e: LoggingEvent): string | undefined =>
     'fileName' in e && typeof e['fileName'] === 'string' && e['fileName'];

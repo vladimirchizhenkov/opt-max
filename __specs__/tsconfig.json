@@ -17,9 +17,17 @@
             "@WizardGenerator/*": ["./modules/mock/api/wizard/generator/*"],
             "@Components/*": ["./modules/components/*"],
             "@Constants/*": ["./modules/constants/*"],
-            "frontend/*": ["../src/*"]
+
+            "frontend/*": ["../src/*"],
+
+            "api/*": ["../src/api/*"],
+            "assets/*": ["../src/assets/*"],
+            "component/*": ["../src/component/*"],
+            "containers/*": ["../src/containers/*"],
+            "redux/*": ["../src/redux/*"],
+            "styles/*": ["../src/styles/*"]
         }
     },
-    "include": ["./modules", "./tests", "./types", "../typeScript"],
-    "exclude": ["../typeScript/modules.d.ts"]
+    "include": ["./modules", "./tests", "./types", "../typeScript", "jest-setup.ts"],
+    "exclude": ["../typeScript/modules.d.ts", "../src"]
 }

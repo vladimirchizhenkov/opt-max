@@ -1,4 +1,4 @@
-import { MockedRequest } from 'msw/lib/types/handlers/requestHandler';
+import type { MockedRequest } from 'msw/lib/types/handlers/requestHandler';
 
 type Method = 'get' | 'post' | 'put' | 'delete';
 

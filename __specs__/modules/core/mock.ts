@@ -1,11 +1,13 @@
 import { DoneRequest } from '@Core/doneRequest';
 import { MockObject } from '@Mocks/mockObject';
 import { waitFor } from '@Utils/waitFor';
-import axios, { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { getLogger } from 'log4js';
-import { MockedRequest, MockedResponse, rest } from 'msw';
-import { ResponseComposition } from 'msw/lib/types/response';
-import { restContext } from 'msw/lib/types/rest';
+import type { MockedRequest, MockedResponse } from 'msw';
+import { rest } from 'msw';
+import type { ResponseComposition } from 'msw/lib/types/response';
+import type { restContext } from 'msw/lib/types/rest';
 import { setupServer } from 'msw/native';
 
 export class Mock {
@@ -43,7 +45,7 @@ export class Mock {
     }
 
     public addMocks(...mocks: MockObject[]): void {
-        mocks.forEach((mock) => this.addMock(mock));
+        mocks.forEach(mock => this.addMock(mock));
     }
 
     public clearDoneRequests(): void {
@@ -85,7 +87,7 @@ export class Mock {
     }
 
     public stopAllRequestBlocking(): void {
-        this.blockedInterceptors.forEach((b) => this.stopRequestBlocking(b));
+        this.blockedInterceptors.forEach(b => this.stopRequestBlocking(b));
     }
 
     public stopRequestBlocking(unblock: MockObject | string): void {
@@ -110,7 +112,7 @@ export class Mock {
         this.doneRequests[url][method].push(new DoneRequest(req));
     }
 
-    private addMock(mock: MockObject) {
+    private addMock(mock: MockObject): void {
         const { url, method } = mock.getPath();
         this.mocks[url] = mock;
         this.server.use(

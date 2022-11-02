@@ -9,7 +9,7 @@ module.exports = {
     testEnvironment: 'jsdom',
     modulePaths: ['<rootDir>/node_modules/'],
     reporters: ['default', 'jest-summarizing-reporter'],
-    setupFilesAfterEnv: ['jest-allure/dist/setup', './jest-setup.ts', 'jest-date-mock'],
+    setupFilesAfterEnv: ['./jest-setup.ts', 'jest-date-mock'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
     moduleNameMapper: {
         '^@page/(.*)': '<rootDir>../modules/pages/$1',
