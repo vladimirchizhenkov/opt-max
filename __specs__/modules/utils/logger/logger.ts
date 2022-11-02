@@ -24,13 +24,13 @@ const transformMessageToAdorableState = (message: string): string =>
     isSimpleMessage(message) ? message : tryToParseToJson(message);
 
 const formatMessages = (messages: string[]): string[] =>
-    messages.map(transformMessageToAdorableState).map((it) => `  ${it}`);
+    messages.map(transformMessageToAdorableState).map(it => `  ${it}`);
 
 const customStdoutAppender: log4js.AppenderModule = {
     configure: (config, layouts) => {
         const layout = config.layout ? layouts.layout(config.layout.type, config.layout) : layouts.coloredLayout;
 
-        const generator: log4js.AppenderFunction = (loggingEvent) => {
+        const generator: log4js.AppenderFunction = loggingEvent => {
             const messages = loggingEvent.data;
 
             if (isMessageBlacklisted(messages)) return;
@@ -53,7 +53,7 @@ log4js.configure({
                 type: 'pattern',
                 pattern: '[%d] %[[%p] %c%] %x{file}:%l%n%m',
                 tokens: {
-                    file: (logEvent) => {
+                    file: logEvent => {
                         const regex = /(__specs__\/.*)/gm;
                         // noinspection TypeScriptUnresolvedVariable
                         const regexResult = regex.exec(logEvent.fileName);
@@ -73,7 +73,7 @@ log4js.configure({
     },
 });
 
-log4js.getLogger().level = process.env.LOG_LEVEL || 'INFO';
+log4js.getLogger().level = 'ALL';
 
 const consoleLogger = log4js.getLogger('Console');
 console.warn = consoleLogger.warn.bind(consoleLogger);
