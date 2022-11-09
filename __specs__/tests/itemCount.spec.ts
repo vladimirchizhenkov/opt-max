@@ -48,6 +48,9 @@ describe('Item Quantity', () => {
 
     test("decreasing quantity to zero shouldn't be possible", async () => {
         // Negative quantity test :)
+        for (let i = INITIAL_ITEM_COUNT; i >= 0; i--) {
+            await item.removeOne();
+        }
 
         reporter.startStep('Item quantity should be one');
         expect(await item.getQuantity()).toBe(1);

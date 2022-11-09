@@ -2,7 +2,7 @@ import { CartList } from '@Components/cartPage/cartList/cartList';
 import { Container } from '@Core/container';
 
 const SELECTORS = {
-    addCartItemButton: './/button[contains(text(), "Add Cart item")]',
+    addCartItemButton: './/button[contains(text(), "Add Cart Item")]',
     addCartItemPopup: './/div[@class="modal" and contains(., "Add New Cart Item")]',
 
     cartList: './/div[@class="cart__list"]',
