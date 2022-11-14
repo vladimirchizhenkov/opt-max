@@ -11,12 +11,9 @@ const SELECTORS = {
     name: './/h2[contains(@class, "name")]',
     fullPrice: './/div[contains(@class, "fullprice")]',
     quantity: '[data-testid="quantity-current"]',
-
     priceForOne: './/div[contains(@class, "price-for-one")]',
-
     addOneButton: './/button[text()="+"]',
     removeOneButton: './/button[text()="-"]',
-
     deleteItemButton: '[data-testid="delete-btn"]',
 };
 

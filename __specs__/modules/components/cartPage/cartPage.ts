@@ -1,5 +1,6 @@
-import { CartList } from '@Components/cartPage/cartList/cartList';
 import { Container } from '@Core/container';
+import { CartList } from '@Components/cartPage/cartList/cartList';
+import { AddItemPopup } from "@Components/cartPage/addItemPopup";
 
 const SELECTORS = {
     addCartItemButton: './/button[contains(text(), "Add Cart Item")]',
@@ -19,7 +20,11 @@ export class CartPageContainer extends Container {
 
     public async getCartList(): Promise<CartList> {
         const [cartListElement] = await document.waitForXpath(SELECTORS.cartList);
-        const cartList = new CartList(cartListElement);
-        return cartList;
+        return new CartList(cartListElement);
+    }
+
+    public async getAddCartItemPopup(): Promise<AddItemPopup> {
+        const [addItemPopupElement] = await document.waitForXpath(SELECTORS.addCartItemPopup);
+        return new AddItemPopup(addItemPopupElement);
     }
 }

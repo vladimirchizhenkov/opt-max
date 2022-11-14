@@ -10,6 +10,8 @@ type CustomDomApi = {
     $x: (xpath: string) => Element;
     clickByCSS: (selector: string) => Promise<void>;
     clickByXpath: (selector: string) => Promise<void>;
+    fillTextByCss: (selector: string, newValue: string | number) => Promise<void>;
+    fillTextByXpath: (selector: string, newValue: string | number) => Promise<void>;
     debug: () => void;
     getByText: (text: string) => Element;
     hoverByCSS: (selector: string) => Promise<void>;
@@ -83,6 +85,24 @@ async function clickByXpath(this: Element | Document, selector: string): Promise
     }
 }
 
+async function fillTextByXpath(this: Element | Document, selector: string, newValue: string | number): Promise<void> {
+    try {
+        const [element] = await this.waitForXpath(selector);
+        fireEvent.change(element, {target: {value: newValue}});
+    } catch (e) {
+        throw new Error(`Cannot fill by xpath \n${(e as Error).stack}`);
+    }
+}
+
+async function fillTextByCss(this: Element | Document, selector: string, newValue: string | number): Promise<void> {
+    try {
+        const [element] = await this.waitForQuerySelector(selector);
+        fireEvent.change(element, {target: {value: newValue}});
+    } catch (e) {
+        throw new Error(`Cannot fill by css \n${(e as Error).stack}`);
+    }
+}
+
 async function hoverByCSS(this: Element | Document, selector: string): Promise<void> {
     try {
         const [element] = await this.waitForQuerySelector(selector);
@@ -110,6 +130,8 @@ const extensions = {
     $x,
     clickByCSS,
     clickByXpath,
+    fillTextByXpath,
+    fillTextByCss,
     debug,
     hoverByCSS,
     hoverByXpath,
