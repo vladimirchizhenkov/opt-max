@@ -37,7 +37,7 @@ describe('Add Item Popup', () => {
         const addItemPopup = await cartPage.getAddCartItemPopup();
 
         reporter.startStep('Fill all fields');
-        await addItemPopup.fillInputName();
+        await addItemPopup.fillInputName(NEW_ITEM_DATA.name);
         await addItemPopup.fillInputPrice(NEW_ITEM_DATA.price);
         await addItemPopup.fillInputQuantity(NEW_ITEM_DATA.quantity);
         reporter.endStep();

@@ -9,8 +9,8 @@ const SELECTORS = {
 };
 
 export class AddItemPopup extends Component {
-    public async fillInputName () {
-        await this.element.fillTextByCss(SELECTORS.name, 'rnd');
+    public async fillInputName (name: string | number) {
+        await this.element.fillTextByCss(SELECTORS.name, name);
     }
 
     public async fillInputPrice (price: number) {
